@@ -1,5 +1,5 @@
 /.DS_Store
-/data
+/data/*
 /out
 /personal_notebook
 /run_log.csv

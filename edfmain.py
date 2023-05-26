@@ -14,6 +14,12 @@ def main():
     ##### WELCOME MESSAGE #####
     print_welcome()
 
+    datapath = 'data/'
+    if not os.path.exists(datapath):
+        os.mkdir(datapath)
+
+    
+
     ##### USER INPUT #####
     main_menu_user_input = input("Please select an option: ")
     if main_menu_user_input == "0":

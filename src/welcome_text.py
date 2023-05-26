@@ -10,7 +10,12 @@ def print_welcome():
     \________|\_______/ \__|            \__|      \__|       \______/  \_______| \_______|\_______/ \_______/  \______/ \__|      
     ''')
     print(f"By McTosima 2023")
-    print(f"=====================")
+    print(f"===================== \n")
+    print(f"data Folder has just been created")
+    print(f"Please move all of your EDF files to data folder")
+    print(f"Naming convention:")
+    print(f"(subject_id)_(noise_type)_(task_id)_(anyotherinfo).edf")
+    print(f"===================== \n")
     print(f"Menu:")
     print(f"1. Batch Process")
     print(f"2. Customized Process")
