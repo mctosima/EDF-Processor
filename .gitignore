@@ -3,3 +3,4 @@
 /out
 /personal_notebook
 /run_log.csv
+src/__pycache__/*

@@ -36,7 +36,7 @@ def run_custom_process():
     print(tabulate(data_df, headers='keys', tablefmt='fancy_grid'))
 
     ### FILTER 1: Noise Type ###
-    print(f"Type the noise type that you want to process seperated by comma, in lower case")
+    print(f"Type the noise type that you want to process separated by comma, in lower case")
     print(f"Example: silent, white, brown")
     print(f"You can also type 'all' to process all noise types")
     user_input = input()
@@ -45,6 +45,13 @@ def run_custom_process():
         list_noise_type = ['silent', 'white', 'brown', 'pink']
     else:
         list_noise_type = parse_input_str(user_input)
+        while not all([x in ['silent', 'white', 'brown', 'pink'] for x in list_noise_type]):
+            print(f"Invalid input. Please input only 'silent', 'white', 'brown', 'pink', or 'all'.")
+            user_input = input()
+            if user_input == 'all':
+                list_noise_type = ['silent', 'white', 'brown', 'pink']
+                break
+            list_noise_type = parse_input_str(user_input)
     # convert to upper case for first letter
     list_noise_type = [x[0].upper() + x[1:] for x in list_noise_type]
     data_df = data_df[data_df['noise_type'].isin(list_noise_type)]
@@ -61,6 +68,13 @@ def run_custom_process():
         list_task = ['rest', 'read']
     else:
         list_task = parse_input_str(user_input)
+        while not all([x in ['rest', 'read'] for x in list_task]):
+            print(f"Invalid input. Please input only 'rest', 'read', or 'all'.")
+            user_input = input()
+            if user_input == 'all':
+                list_task = ['rest', 'read']
+                break
+            list_task = parse_input_str(user_input)
     # convert to upper case for first letter
     list_task = [x[0].upper() + x[1:] for x in list_task]
     data_df = data_df[data_df['task'].isin(list_task)]
@@ -77,9 +91,16 @@ def run_custom_process():
         list_signal_type = ['alpha', 'beta', 'theta', 'delta', 'gamma']
     else:
         list_signal_type = parse_input_str(user_input)
+        while not all([x in ['alpha', 'beta', 'theta', 'delta', 'gamma'] for x in list_signal_type]):
+            print(f"Invalid input. Please input only 'alpha', 'beta', 'theta', 'delta', 'gamma', or 'all'.")
+            user_input = input()
+            if user_input == 'all':
+                list_signal_type = ['alpha', 'beta', 'theta', 'delta', 'gamma']
+                break
+            list_signal_type = parse_input_str(user_input)
 
     ### FILTER 4: Which channels do you want to use ###
-    print(f"Type the channels that you want to use seperated by comma (MUST BE CAPITAL LETTER)")
+    print(f"Type the channels that you want to use separated by comma (MUST BE CAPITAL LETTER)")
     print(f"Option: 'AF3', 'F7', 'F3', 'FC5', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'FC6', 'F4', 'F8', 'AF4'")
     print(f"You can also type 'all' to use all channels")
     user_input = input()
@@ -88,6 +109,13 @@ def run_custom_process():
         list_channel = ['AF3', 'F7', 'F3', 'FC5', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'FC6', 'F4', 'F8', 'AF4']
     else:
         list_channel = parse_input_str(user_input)
+        while not all([x in ['AF3', 'F7', 'F3', 'FC5', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'FC6', 'F4', 'F8', 'AF4'] for x in list_channel]):
+            print(f"Invalid input. Please input only 'AF3', 'F7', 'F3', 'FC5', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'FC6', 'F4', 'F8', 'AF4', or 'all'.")
+            user_input = input()
+            if user_input == 'all':
+                list_channel = ['AF3', 'F7', 'F3', 'FC5', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'FC6', 'F4', 'F8', 'AF4']
+                break
+            list_channel = parse_input_str(user_input)
 
     ### FILTER 5: Do you want to save the signal? ###
     print(f"Do you want to save the signal? (y/n)")

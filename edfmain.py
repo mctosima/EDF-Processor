@@ -18,8 +18,6 @@ def main():
     if not os.path.exists(datapath):
         os.mkdir(datapath)
 
-    
-
     ##### USER INPUT #####
     main_menu_user_input = input("Please select an option: ")
     if main_menu_user_input == "0":
@@ -62,6 +60,11 @@ def main():
     elif main_menu_user_input == "3":
         from src.create_topomap import run_create_topomap
         run_create_topomap()
+    
+    else:
+        print("Invalid input, please try again")
+        clear_terminal()
+        main()
 
     
 if __name__ == "__main__":
