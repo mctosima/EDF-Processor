@@ -35,6 +35,19 @@ def run_custom_process():
     print(f"List of All Files...")
     print(tabulate(data_df, headers='keys', tablefmt='fancy_grid'))
 
+    ### FILTER BY SUBJECT ID
+    print(f"Type the subject id that you want to process separated by comma")
+    print(f"Example: 0,1,2,3 or in a mixed format such as: 0-3,7-10,12-13,15,16")
+    print(f"You can also type 'all' to process all subject id")
+    user_input = input()
+    print(f"===================== \n")
+    if user_input != 'all':
+        list_subject_id = parse_input(user_input)
+        list_subject_id = [str(x) for x in list_subject_id]
+        data_df = data_df[data_df['subject'].isin(list_subject_id)]
+    print(f"Current list of files to process...")
+    print(tabulate(data_df, headers='keys', tablefmt='fancy_grid'))
+
     ### FILTER 1: Noise Type ###
     print(f"Type the noise type that you want to process separated by comma, in lower case")
     print(f"Example: silent, white, brown")
