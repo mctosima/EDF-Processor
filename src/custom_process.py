@@ -178,8 +178,6 @@ def run_custom_process():
                     freq_type = freq_type,
                     return_psd = save_signal,
                     select_channels = list_channel,
-                    len_drop = 7680,
-                    len_keep = 46080,
                 )
 
                 ### EXTRACT VALUE AND APPEND TO CSV ###

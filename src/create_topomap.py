@@ -107,8 +107,8 @@ def run_create_topomap():
         channel_list = ['AF3', 'F7', 'F3', 'FC5', 'T7', 'P7', 'O1', 'O2', 'P8', 'T8', 'FC6', 'F4', 'F8', 'AF4']
         signal_df = signal_df[channel_list]
 
-        len_drop = 7680
-        len_keep = 46080
+        len_drop = 15361
+        len_keep = 61441
 
         signal_df = signal_df.iloc[len_drop:]
         signal_df = signal_df.iloc[:len_keep]
