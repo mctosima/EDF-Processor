@@ -42,7 +42,7 @@ def run_batch_process():
         # Create the csv file if it does not exist
         with open(log_csv_path, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(['subject', 'noise_type', 'task', 'freq_type', 'sum_raw', 'avg_raw', 'sum_filtered', 'avg_filtered', 'rel_pow'])
+            writer.writerow(['timestamp', 'subject', 'noise_type', 'task', 'freq_type', 'sum_raw', 'avg_raw', 'sum_filtered', 'avg_filtered', 'rel_pow'])
 
     ### LOOP THROUGH ALL FILES ###
     with open(log_csv_path, 'a', newline='') as file:

@@ -154,7 +154,7 @@ def run_custom_process():
         # Create the csv file if it does not exist
         with open(log_csv_path, 'w', newline='') as file:
             writer = csv.writer(file)
-            writer.writerow(['subject', 'noise_type', 'task', 'freq_type', 'sum_raw', 'avg_raw', 'sum_filtered', 'avg_filtered', 'rel_pow'])
+            writer.writerow(['timestamp', 'subject', 'noise_type', 'task', 'freq_type', 'sum_raw', 'avg_raw', 'sum_filtered', 'avg_filtered', 'rel_pow'])
 
     ### LOOP THROUGH ALL FILES ###
     with open(log_csv_path, 'a', newline='') as file:
@@ -178,6 +178,8 @@ def run_custom_process():
                     freq_type = freq_type,
                     return_psd = save_signal,
                     select_channels = list_channel,
+                    len_drop = 7680,
+                    len_keep = 46080,
                 )
 
                 ### EXTRACT VALUE AND APPEND TO CSV ###
