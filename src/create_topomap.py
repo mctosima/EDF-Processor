@@ -148,16 +148,67 @@ def run_create_topomap():
         rel_powers = bandpow / np.sum(bandpow, axis=0, keepdims=True)
         rel_powers = rel_powers.T
 
+        # Normalize the data on the first dimension (across channels) between 0 and 1
+        rel_powers_normalize = (rel_powers - np.min(rel_powers, axis=0)) / (np.max(rel_powers, axis=0) - np.min(rel_powers, axis=0))
+
         # Create topomap for each band
         fig, ax = plt.subplots(1, 5, figsize=(15, 4))
         for i, band in enumerate(bands):
-            mne.viz.plot_topomap(rel_powers[:, i], raw.info, cmap=cmap, axes=ax[i], show=False)
+            mne.viz.plot_topomap(rel_powers_normalize[:, i], raw.info, cmap=cmap, axes=ax[i], show=False)
             ax[i].set_title(band[2])
+            # Plot the maximum value on the topomap and print the channel name on the x-axis
+            max_ch = np.argmax(rel_powers[:, i])
+            max_val = np.max(rel_powers[:, i])
+            max_ch_name = raw.info['ch_names'][max_ch]
+            ax[i].set_xlabel(f"Max Channel: {max_ch_name} \n Max Value: {max_val:.2f}")
+        fig.suptitle(f"Topomap of {subject_id} {noise_type} {task} (Channels is Normalized)")
+        fig.tight_layout()
+        # show colorbar
+        # fig.subplots_adjust(right=0.8)
+        # cbar_ax = fig.add_axes([0.85, 0.15, 0.05, 0.7])
+        # fig.colorbar(ax[0].images[0], cax=cbar_ax)
+
 
         save_path = "out/topomap"
         if not os.path.exists(save_path):
             os.makedirs(save_path)
-        plt.savefig(f"{save_path}/{subject_id}_{noise_type}_{task}.png")
+        plt.savefig(f"{save_path}/{subject_id}_{noise_type}_{task}_normalized.png")
         plt.close()
+
+        # Create topomap for each band (unnormalized)
+        fig, ax = plt.subplots(1, 5, figsize=(15, 4))
+        for i, band in enumerate(bands):
+            mne.viz.plot_topomap(rel_powers[:, i], raw.info, cmap=cmap, axes=ax[i], show=False)
+            ax[i].set_title(band[2])
+            # Plot the maximum value on the topomap and print the channel name on the x-axis
+            max_ch = np.argmax(rel_powers[:, i])
+            max_val = np.max(rel_powers[:, i])
+            max_ch_name = raw.info['ch_names'][max_ch]
+            ax[i].set_xlabel(f"Max Channel: {max_ch_name} \n Max Value: {max_val:.2f}")
+        fig.suptitle(f"Topomap of {subject_id} {noise_type} {task}")
+        fig.tight_layout()
+        # show colorbar
+        fig.subplots_adjust(right=0.8)
+        cbar_ax = fig.add_axes([0.85, 0.15, 0.05, 0.7])
+        fig.colorbar(ax[0].images[0], cax=cbar_ax)
+
+
+        save_path = "out/topomap"
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+        plt.savefig(f"{save_path}/{subject_id}_{noise_type}_{task}_raw.png")
+        plt.close()
+
+        # save rel_powers as csv
+        save_path = "out/topomap"
+        if not os.path.exists(save_path):
+            os.makedirs(save_path)
+        # convert rel_powers to dataframe
+        rel_powers_df = pd.DataFrame(rel_powers, columns=['Delta', 'Theta', 'Alpha', 'Beta', 'Gamma'])
+        # in the first column, create a list of channel names from `channel_list`
+        rel_powers_df.insert(0, 'Channel', channel_list)
+        # save the dataframe as csv
+        rel_powers_df.to_csv(f"{save_path}/{subject_id}_{noise_type}_{task}.csv", index=False)
+
 
 
