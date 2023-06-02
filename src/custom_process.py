@@ -101,14 +101,14 @@ def run_custom_process():
     user_input = input()
     print(f"===================== \n")
     if user_input == 'all':
-        list_signal_type = ['alpha', 'beta', 'theta', 'delta', 'gamma']
+        list_signal_type = ['low_alpha', 'high_alpha', 'low_beta', 'high_beta', 'theta', 'delta', 'gamma']
     else:
         list_signal_type = parse_input_str(user_input)
-        while not all([x in ['alpha', 'beta', 'theta', 'delta', 'gamma'] for x in list_signal_type]):
-            print(f"Invalid input. Please input only 'alpha', 'beta', 'theta', 'delta', 'gamma', or 'all'.")
+        while not all([x in ['low_alpha', 'high_alpha', 'low_beta', 'high_beta', 'theta', 'delta', 'gamma'] for x in list_signal_type]):
+            print(f"Invalid input. Please input only 'low_alpha', 'high_alpha', 'low_beta', 'high_beta', 'theta', 'delta', 'gamma', or 'all'.")
             user_input = input()
             if user_input == 'all':
-                list_signal_type = ['alpha', 'beta', 'theta', 'delta', 'gamma']
+                list_signal_type = ['low_alpha', 'high_alpha', 'low_beta', 'high_beta', 'theta', 'delta', 'gamma']
                 break
             list_signal_type = parse_input_str(user_input)
 
@@ -199,6 +199,8 @@ def run_custom_process():
                     header = ['freqs'] + list_channel
                     file_name = f"{subject_id}_{noise_type}_{task}_{freq_type}.csv"
                     save_path = "out/signal"
+                    if not os.path.exists(save_path):
+                        os.makedirs(save_path)
                     np.savetxt(os.path.join(save_path, file_name), psd_filtered, delimiter=',', header=','.join(header), comments=save_path)
 
                     if idx == 0:
@@ -209,6 +211,7 @@ def run_custom_process():
                         header = ['freqs'] + list_channel
                         file_name = f"{subject_id}_{noise_type}_{task}_raw.csv"
                         save_path = "out/signal"
+
                         np.savetxt(os.path.join(save_path, file_name), psd_raw, delimiter=',', header=','.join(header), comments=save_path)
 
         print(f"=====================")

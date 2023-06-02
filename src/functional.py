@@ -79,10 +79,12 @@ def get_psd_feature(
     
     # 6. Get the PSD for Selected Bands
     freq_bands = {'delta': (0.5, 4),
-              'theta': (4, 8),
-              'alpha': (8, 13),
-              'beta': (13, 30),
-              'gamma': (30, 50)}
+                'theta': (4, 8),
+                'low_alpha': (8, 10),
+                'high_alpha': (10, 12),
+                'low_beta': (12, 16),
+                'high_beta': (16, 25),
+                'gamma': (30, 50)}
     
     # obtain frequency range based on the parameter passed to `freq_type`
     freq_range = freq_bands[freq_type]

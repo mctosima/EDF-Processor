@@ -137,8 +137,15 @@ def run_create_topomap():
             verbose = False,
         )
 
-        bands = [(0, 4, 'Delta'), (4, 8, 'Theta'), (8, 12, 'Alpha'),
-                (12, 30, 'Beta'), (30, 45, 'Gamma')]
+        bands = [
+            (0.5, 4, 'Delta'),
+            (4, 8, 'Theta'),
+            (8, 10, 'Low_Alpha'),
+            (10, 12, 'High_Alpha'),
+            (12, 16, 'Low_Beta'),
+            (16, 25, 'High_Beta'),
+            (30, 50, 'Gamma')
+            ]
         
         bandpow = np.zeros((len(bands), psd_raw.shape[0]))
 
@@ -152,7 +159,7 @@ def run_create_topomap():
         rel_powers_normalize = (rel_powers - np.min(rel_powers, axis=0)) / (np.max(rel_powers, axis=0) - np.min(rel_powers, axis=0))
 
         # Create topomap for each band
-        fig, ax = plt.subplots(1, 5, figsize=(15, 4))
+        fig, ax = plt.subplots(1, 7, figsize=(15, 4))
         for i, band in enumerate(bands):
             mne.viz.plot_topomap(rel_powers_normalize[:, i], raw.info, cmap=cmap, axes=ax[i], show=False)
             ax[i].set_title(band[2])
@@ -176,7 +183,7 @@ def run_create_topomap():
         plt.close()
 
         # Create topomap for each band (unnormalized)
-        fig, ax = plt.subplots(1, 5, figsize=(15, 4))
+        fig, ax = plt.subplots(1, 7, figsize=(15, 4))
         for i, band in enumerate(bands):
             mne.viz.plot_topomap(rel_powers[:, i], raw.info, cmap=cmap, axes=ax[i], show=False)
             ax[i].set_title(band[2])
@@ -204,7 +211,7 @@ def run_create_topomap():
         if not os.path.exists(save_path):
             os.makedirs(save_path)
         # convert rel_powers to dataframe
-        rel_powers_df = pd.DataFrame(rel_powers, columns=['Delta', 'Theta', 'Alpha', 'Beta', 'Gamma'])
+        rel_powers_df = pd.DataFrame(rel_powers, columns=['Delta', 'Theta', 'Low_Alpha', 'High_Alpha', 'Low_Beta', 'High_Beta', 'Gamma'])
         # in the first column, create a list of channel names from `channel_list`
         rel_powers_df.insert(0, 'Channel', channel_list)
         # save the dataframe as csv
