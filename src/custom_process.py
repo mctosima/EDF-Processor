@@ -11,8 +11,19 @@ import datetime as dt
 sys.path.append('src')
 from functional import *
 from utils import *
+import json
 
 def run_custom_process():
+    ### OPEN CONFIG ###
+    with open('src/config.json', 'r') as f:
+        config = json.load(f)
+
+    ### DEFINE FREQUENCY BANDS ###
+    if config["edf_config"]["frequency_mode"] == 5:
+        freq_names = [d["name"] for d in config["edf_config"]["five_freq_split"]]
+    elif config["edf_config"]["frequency_mode"] == 7:
+        freq_names = [d["name"] for d in config["edf_config"]["seven_freq_split"]]
+
     ### DEFINE DATAPATH ###
     data_path = 'data'
 
@@ -101,14 +112,14 @@ def run_custom_process():
     user_input = input()
     print(f"===================== \n")
     if user_input == 'all':
-        list_signal_type = ['low_alpha', 'high_alpha', 'low_beta', 'high_beta', 'theta', 'delta', 'gamma']
+        list_signal_type = freq_names
     else:
         list_signal_type = parse_input_str(user_input)
-        while not all([x in ['low_alpha', 'high_alpha', 'low_beta', 'high_beta', 'theta', 'delta', 'gamma'] for x in list_signal_type]):
-            print(f"Invalid input. Please input only 'low_alpha', 'high_alpha', 'low_beta', 'high_beta', 'theta', 'delta', 'gamma', or 'all'.")
+        while not all([x in freq_names for x in list_signal_type]):
+            print(f"Invalid input. Please input only {freq_names}, or 'all'.")
             user_input = input()
             if user_input == 'all':
-                list_signal_type = ['low_alpha', 'high_alpha', 'low_beta', 'high_beta', 'theta', 'delta', 'gamma']
+                list_signal_type = freq_names
                 break
             list_signal_type = parse_input_str(user_input)
 

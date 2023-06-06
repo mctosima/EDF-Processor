@@ -20,6 +20,7 @@ def print_welcome():
     print(f"1. Batch Process")
     print(f"2. Customized Process")
     print(f"3. Create A Topomap")
+    print(f"4. Configurations")
     print(f"9. Checking Python Compatibility")
     print(f"10. Install Required Packages")
     print(f"0. Exit")

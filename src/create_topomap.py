@@ -11,8 +11,21 @@ import datetime as dt
 sys.path.append('src')
 from functional import *
 from utils import *
+import json
 
 def run_create_topomap():
+    ### OPEN CONFIG ###
+    with open('src/config.json', 'r') as f:
+        config = json.load(f)
+
+    ### DEFINE FREQUENCY BANDS ###
+    if config["edf_config"]["frequency_mode"] == 5:
+        freq_names = [d["name"] for d in config["edf_config"]["five_freq_split"]]
+        bands = [(freq['low'], freq['high'], freq['name']) for freq in config['edf_config']['five_freq_split']]
+    elif config["edf_config"]["frequency_mode"] == 7:
+        freq_names = [d["name"] for d in config["edf_config"]["seven_freq_split"]]  
+        bands = [(freq['low'], freq['high'], freq['name']) for freq in config['edf_config']['seven_freq_split']]
+
     ### DEFINE DATAPATH ###
     data_path = 'data'
 
@@ -136,16 +149,6 @@ def run_create_topomap():
             sfreq = 256,
             verbose = False,
         )
-
-        bands = [
-            (0.5, 4, 'Delta'),
-            (4, 8, 'Theta'),
-            (8, 10, 'Low_Alpha'),
-            (10, 12, 'High_Alpha'),
-            (12, 16, 'Low_Beta'),
-            (16, 25, 'High_Beta'),
-            (30, 50, 'Gamma')
-            ]
         
         bandpow = np.zeros((len(bands), psd_raw.shape[0]))
 
@@ -211,7 +214,7 @@ def run_create_topomap():
         if not os.path.exists(save_path):
             os.makedirs(save_path)
         # convert rel_powers to dataframe
-        rel_powers_df = pd.DataFrame(rel_powers, columns=['Delta', 'Theta', 'Low_Alpha', 'High_Alpha', 'Low_Beta', 'High_Beta', 'Gamma'])
+        rel_powers_df = pd.DataFrame(rel_powers, columns=freq_names)
         # in the first column, create a list of channel names from `channel_list`
         rel_powers_df.insert(0, 'Channel', channel_list)
         # save the dataframe as csv

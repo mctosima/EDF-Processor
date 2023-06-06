@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import pandas as pd
+import json
 
 def list_files_and_make_df(data_path):
     file_list = sorted(os.listdir(data_path))
@@ -78,13 +79,17 @@ def get_psd_feature(
     )
     
     # 6. Get the PSD for Selected Bands
-    freq_bands = {'delta': (0.5, 4),
-                'theta': (4, 8),
-                'low_alpha': (8, 10),
-                'high_alpha': (10, 12),
-                'low_beta': (12, 16),
-                'high_beta': (16, 25),
-                'gamma': (30, 50)}
+    ### OPEN CONFIG ###
+    with open('src/config.json', 'r') as f:
+        config = json.load(f)
+
+    ### DEFINE FREQUENCY BANDS ###
+    if config["edf_config"]["frequency_mode"] == 5:
+        freq_splits = config["edf_config"]["five_freq_split"]
+    elif config["edf_config"]["frequency_mode"] == 7:
+        freq_splits = config["edf_config"]["seven_freq_split"]
+        
+    freq_bands = {d["name"]: (d["low"], d["high"]) for d in freq_splits}
     
     # obtain frequency range based on the parameter passed to `freq_type`
     freq_range = freq_bands[freq_type]

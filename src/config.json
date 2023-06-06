@@ -1,0 +1,21 @@
+{
+    "edf_config": {
+        "frequency_mode": 5,
+        "five_freq_split": [
+            {"name": "delta", "low": 0.5, "high": 4.0},
+            {"name": "theta", "low": 4.0, "high": 8.0},
+            {"name": "alpha", "low": 8.0, "high": 12.0},
+            {"name": "beta", "low": 12.0, "high": 30.0},
+            {"name": "gamma", "low": 30.0, "high": 50.0}
+        ],
+        "seven_freq_split": [
+            {"name": "delta", "low": 0.5, "high": 4.0},
+            {"name": "theta", "low": 4.0, "high": 8.0},
+            {"name": "low_alpha", "low": 8.0, "high": 10.0},
+            {"name": "high_alpha", "low": 10.0, "high": 12.0},
+            {"name": "low_beta", "low": 12.0, "high": 16.0},
+            {"name": "high_beta", "low": 16.0, "high": 25.0},
+            {"name": "gamma", "low": 30.0, "high": 50.0}
+        ]
+    }
+}
