@@ -10,6 +10,7 @@ def print_welcome():
     \________|\_______/ \__|            \__|      \__|       \______/  \_______| \_______|\_______/ \_______/  \______/ \__|      
     ''')
     print(f"By McTosima 2023")
+    print(f"Version 0.1.0")
     print(f"===================== \n")
     print(f"data Folder has just been created")
     print(f"Please move all of your EDF files to data folder")
