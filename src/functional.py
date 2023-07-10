@@ -32,7 +32,8 @@ def get_psd_feature(
     freq_type: str,
     fs: int = 256,
     len_drop: int = 15361,
-    len_keep: int = 61441,
+    # len_keep: int = 61441,
+    len_keep: int = 46081,
     plot_psd: bool = False,
     return_psd: bool = False,
     channel_drop: list = None,
@@ -49,6 +50,8 @@ def get_psd_feature(
     # Select certain channels based on `select_channels`
     if select_channels is not None:
         df_signal = df_signal[select_channels]
+
+    
     
     # 2. Crop the signal
     df_signal = df_signal.iloc[len_drop:]
